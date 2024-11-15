@@ -8,7 +8,10 @@ const app = express();
 const PORT = 5001;
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
+
+const usersRoutes = require('./routes/users');
+app.use('/api/users', usersRoutes);
 
 app.get('/', (req, res) => {
   res.send('API работает');
