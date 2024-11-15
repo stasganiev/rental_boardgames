@@ -1,6 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const db = require('../config/database');
+const authenticateToken = require('./authMiddleware');
+const router = express.Router();
 
 // Получение всех игр
 router.get('/', (req, res) => {
@@ -12,10 +13,8 @@ router.get('/', (req, res) => {
   });
 });
 
-module.exports = router;
-
 // Добавление новой игры
-router.post('/', (req, res) => {
+router.post('/', authenticateToken, (req, res) => {
     const { title, description, rental_price, deposit, availability } = req.body;
 
     // Проверка, что обязательные поля заполнены
@@ -35,7 +34,7 @@ router.post('/', (req, res) => {
 });
 
 // Обновление информации об игре
-router.put('/:id', (req, res) => {
+router.put('/:id', authenticateToken, (req, res) => {
     const { id } = req.params;
     const { title, description, rental_price, deposit, availability } = req.body;
   
@@ -54,7 +53,7 @@ router.put('/:id', (req, res) => {
 });
 
 // Удаление игры
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authenticateToken, (req, res) => {
     const { id } = req.params;
   
     const query = 'DELETE FROM games WHERE id = ?';
@@ -69,3 +68,5 @@ router.delete('/:id', (req, res) => {
       res.json({ message: 'Игра успешно удалена' });
     });
 });
+
+module.exports = router;

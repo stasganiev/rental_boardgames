@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button, TextField } from '@mui/material';
 
 const AddGameForm = ({ onGameAdded }) => {
   const [title, setTitle] = useState('');
@@ -34,26 +35,31 @@ const AddGameForm = ({ onGameAdded }) => {
     <form onSubmit={handleSubmit}>
       <h2>Добавить новую игру</h2>
       <div>
-        <label>Название игры:</label>
-        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+        <TextField
+          label="Название игры"
+          variant="outlined"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+          fullWidth
+          margin="normal"
+        />
       </div>
       <div>
-        <label>Описание:</label>
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+        <TextField
+          label="Описание"
+          variant="outlined"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          multiline
+          rows={4}
+          fullWidth
+          margin="normal"
+        />
       </div>
-      <div>
-        <label>Цена аренды (€):</label>
-        <input type="number" value={rentalPrice} onChange={(e) => setRentalPrice(e.target.value)} required />
-      </div>
-      <div>
-        <label>Залог (€):</label>
-        <input type="number" value={deposit} onChange={(e) => setDeposit(e.target.value)} required />
-      </div>
-      <div>
-        <label>Доступность:</label>
-        <input type="checkbox" checked={availability} onChange={(e) => setAvailability(e.target.checked)} />
-      </div>
-      <button type="submit">Добавить игру</button>
+      <Button type="submit" variant="contained" color="primary">
+        Добавить игру
+      </Button>
     </form>
   );
 };
